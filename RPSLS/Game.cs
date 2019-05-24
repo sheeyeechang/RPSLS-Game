@@ -12,10 +12,14 @@ namespace RPSLS
 
         Players player1;
         Players player2;
-
+        public int gameMode;
+        public int numbers;
+  
         //constructor (SPAWNER/DEFAULT)//
         public Game()
         {
+
+            gameMode = 0;
 
         }
 
@@ -47,48 +51,94 @@ namespace RPSLS
                 player2 = new Human();
             }
         }
-            //Choose gesture
-        public void MakeGesture(string gesture)
-            {
-                player1.ChooseGesture(gesture);
-                player2.ChooseGesture(gesture);
-            }
-        
 
-        //Display round winner 
-        public int CalculateWinner(int player1, int player2)
-        {
-            switch (player1)
-            {
-                case 1:
-                    Console.WriteLine($"\n{player1}: Rock\n{player2}: Scissor\n{player1} wins this round");
-                    return 1;
-                case 2:
-                    Console.WriteLine($"\n{player1}: Rock\n{player2}: Paper\n{player2} Wins this round!");
-                    return 1;
-                case 3:
-                    Console.WriteLine($"\n{player1}: Rock\n{player2}: Rock\nIt's a tie!");
-                    return 0;
-                case 4:
-                    Console.WriteLine($"\n{player1}: Rock\n{player2}: Lizard\n{player1} wins this round");
-                    return 1;
-                case 5:
-                    Console.WriteLine($"\n{player1}: Rock\n{player2}: Spock\n{player2} Wins this round");
-                    return 1;
-                default:
-                    return 2;
-            }
-        }
-        ////display points
-        //public void DisplayPoints()
+        //method to validate user input is a number
+        //public void TestNumber(string input)
         //{
-        //    Console.WriteLine($"\nScoreBoard:\t\t{player.player1Name}: {player.player1Points}\t{player.player2Name}: {player.player2Points}");
+        //    int num = 0;
+        //    try
+        //    {
+        //        num = int.Parse(input);
+        //        numbers = Math.Abs(num);
+        //    }catch(Exception e)
+        //    {
+        //        numbers = 0;
+        //    }            
         //}
 
-        ////returns winner of each round
+        //prompt game mode user wants to play; playervsplayer or playervsAI    
+        public void PromptNumberOfPlayers()
+        {
+            //int gameMode, i = 0;
+            do
+            {
+                gameMode = PromptInputNumber("Enter the game mode you would like to play: 1 = Human vs AI\t\t 2 = Human vs Human");
+                
+            } while (gameMode != 1 && gameMode != 2);
+        }
+            //method to validate user input is a number, and returns the input if it's true-- valide letter that not valid so need to enter number
+        public int PromptInputNumber(string input)
+        {
+            int userInput = 0;
+            do
+            {
+                Console.WriteLine(input);
+                userInput = int.Parse(Console.ReadLine());
+            }
+            while (userInput == 0);
+            return userInput;
+                //try
+                //{
+                //    input = int.Parse(userInput);
+                //}
+                //catch
+                //{
+                //    return PromptInputNumber(input);
+                //}
+        }
+        //prompt player names
+        public void PromptNames()
+        {
+            if (gameMode == 1)
+            {
+                player1.PromptPlayerName(1);
+            }
+            else if (gameMode == 2)
+            {
+                player1.PromptPlayerName(1);
+                player2.PromptPlayerName(2);
+
+            }
+        }
+        ////CHOOSE GESTURE
+        public void MakeGesture()
+        {
+            player1.ChooseGesture();
+            player2.ChooseGesture();
+        }
+
+        //prompt for player choices
+        public void StartRound(int gameMode)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\nThe Game is starting!\n1: Scissors\t2: Paper\t3: Rock\n4: Lizard\t5: Spock");
+            Console.ResetColor();
+            if (gameMode == 1)
+            {
+                player1.PlayerChoice(player1.player1Name);
+                //player2.PlayerChoice(player2.player2Name);
+            }
+            else if (gameMode == 2)
+            {
+                player1.PlayerChoice(player1.player1Name);
+                player2.PlayerChoice(player2.player2Name);
+            }
+        }
+
+        //returns winner of each round
         //public int DetermineWinner(int player1Pick)
         //{
-        //    if (determineWinner == 1)
+        //    if (gameMode == 1)
         //    {
         //        switch (player1Pick)
         //        {
@@ -116,53 +166,13 @@ namespace RPSLS
         //        }
         //}
 
-        ////returns winner of each round
-        //public void RoundIncrementer()
-        //{
-        //    int round = 0;
-        //    bool playGame = true;
-        //    while (playGame)
-        //    {
-        //        if (round == 3)
-        //        {
-        //            playGame = false;
-        //        }
-        //        round++;
-        //    }
 
-        //}
-        
-        ////prompt the user to end game or play again
-        //public int endGame()
+        ////display points
+        //public void DisplayPoints()
         //{
-        //    string winner;
-        //    int endOfGame;
-        //    int i = 0;
-        //    if (player.player1Points == 3)
-        //    {
-        //        winner = player.player1Name;
-        //    }
-        //    else if (player.player2Points == 3 && gameMode == 2)
-        //    {
-        //        winner = player.player2Name;
-        //    }
-        //    else
-        //    {
-        //        winner = ai.player2Name;
-        //    }
-        //    Console.ForegroundColor = ConsoleColor.Magenta;
-        //    Console.WriteLine($"\n\n{winner} is the winner!");
+        //    Console.ForegroundColor = ConsoleColor.Yellow;
+        //    Console.WriteLine($"\nScoreBoard:\t\t{player.player1Name}: {player.player1Points}\t{player.player2Name}: {player.player2Points}");
         //    Console.ResetColor();
-        //    do
-        //    {
-        //        if (i > 0)
-        //        {
-        //            Console.WriteLine("Invalid entry.Try again.\n");
-        //        }
-        //        endOfGame = PromptInputNumber("Would you like to play again? 1= yes\t2= no", TestNumber);
-        //        i++;
-        //    } while (endOfGame == 0 || endOfGame > 2);
-        //    return endOfGame;
         //}
         ////initial method that gets called to run the game
         public void RunGame()
@@ -170,21 +180,26 @@ namespace RPSLS
             //    int restart;
             //    do //loop to restart game
             //    {
-            //        DisplayRules();
-            //        PromptNumberOfPlayers();
-            //        PromptNames(gameMode);
-            //        while (player.player1Points < 3 && player.player2Points < 3)//loop to run rounds until a player gets 3 points
-            //        {
-            //            StartRound(gameMode);
-            //            player.CalculatePoints(DetermineWinner(player.player1Pick));
-            //            DisplayPoints();
-            //        }
-            //        restart = endGame();
-            //        player.player1Points = 0;
-            //        player.player2Points = 0;
-            //        Console.Clear();
-            //    } while (restart == 1);
-            //    Environment.Exit(0);
+            DisplayRules();
+            PromptNumberOfPlayers();
+            SetPlayers(gameMode);
+            PromptNames();
+            MakeGesture();
+
+
+            while (player1.player1Points < 3 && player2.player2Points < 3)//loop to run rounds until a player gets 2 points
+            {
+                StartRound(gameMode);
+                //            player.CalculatePoints(DetermineWinner(player.player1Pick));
+                //            DisplayPoints();
+                //        }
+                //        restart = endGame();
+                //        player.player1Points = 0;
+                //        player.player2Points = 0;
+                //        Console.Clear();
+                //    } while (restart == 1);
+                //    Environment.Exit(0);
+            }
         }
     }
 }

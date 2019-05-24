@@ -12,7 +12,13 @@ namespace RPSLS
         public int score;
         public string gesture;
         public List<string> gestures;
-        public string name;
+        public string player1Name;
+        public string player2Name;
+        public int player1Points;
+        public int player2Points;
+        public int player1Pick;
+        public int player2Pick;
+        public int gameMode;
 
 
         //constructor (SPAWNER/DEFAULT)//
@@ -35,6 +41,31 @@ namespace RPSLS
         //        string name = Console.ReadLine();
         //        return name;
         //    }
+        //prompt player name
+        //Method that validates user input is a letter or number, and returns the input if it's true
+        public string PromptInputLetters(string name)
+        {
+            string playerName = "";
+            do
+            {
+                Console.WriteLine(name);
+                playerName = Console.ReadLine();
+            }
+            while (playerName.Length < 1);
+            return playerName;
+        }
+
+
+        public virtual void PromptPlayerName(int playerNumber)
+        {
+            if (playerNumber == 1)
+            {
+                player1Name = PromptInputLetters($"\nEnter a Player {playerNumber} name: ");
+            }
+            else
+                player2Name = PromptInputLetters($"\nEnter a Player {playerNumber} name: ");
+
+        }
 
         //    //Set player name
         //    public void SetPlayerName(string name)
@@ -52,90 +83,99 @@ namespace RPSLS
         //    }
 
 
-        //Choose gesture
+        //method to validate user input is a number, and returns the input if it's true
+        public int PromptInputNumber(string input)
+        {
+            string userInput;
+            do
+            {
+                Console.WriteLine(input);
+                userInput = Console.ReadLine();
+            }
+            while (userInput == null);
+            try
+            {
+                int gameMode = int.Parse(userInput);
+            }
+            catch
+            {
+                return PromptInputNumber(input);
+
+            }
+            return gameMode;
+        }
+
+        //CHOOSE GESTURE
         public abstract string ChooseGesture();
 
-        //    //prompts player choice/Compare gesture/determine roun winner
-        //    public void PlayerChoice(string playerName)
-        //    {
-        //        int choice, i = 0;
-        //        do
-        //        {
-        //            if (i < 0)
-        //            {
-        //                Console.WriteLine("Invalid entry.Try again.\n");
-        //            }
-        //            choice = PromptInputNumber($"{playerName}, please enter your choice: ", TestNumber);
-        //            i++;
-        //        } while (choice == 0 || choice > 4);
-        //        if (playerName == player1Name)
-        //        {
-        //            player1Pick = choice;
-        //        }
-        //        else if (playerName == player2Name)
-        //        {
-        //            player2Pick = choice;
-        //        }
-        //    }
+        ////prompts player choice/Compare gesture/determine roun winner
+        public void PlayerChoice(string playerName)
+        {
+            int choice, i = 0;
+            do
+            {
+                if (i < 0)
+                {
+                    Console.WriteLine("Invalid entry.Try again.\n");
+                }
+                choice = PromptInputNumber($"{playerName}, please enter your choice: ");
+                i++;
+            } while (choice == 1 || choice < 6);
+            if (playerName == player1Name)
+            {
+                player1Pick = choice;
+            }
+            else if (playerName == player2Name)
+            {
+                player2Pick = choice;
+            }
+        }
         //    //calculate points for each player
-        //    public void CalculatePoints(int points)
-        //    {
-        //        if (points == 1)
-        //        {
-        //            player1Points++;
-        //        }
-        //        else if (points == 2)
-        //        {
-        //            player2Points++;
-        //        }
-        //    }
-        //    //method to validate user input is a number
-        //    public bool TestNumber(string input)
-        //    {
-        //        bool testedInput = numbers.IsMatch(input);
-        //        if (testedInput && input != "")
-        //        {
-        //            return (true);
-        //        }
-        //        else
-        //            Console.WriteLine("Invalid entry. Try again.\n");
-        //        return (false);
-        //    }
-        //    //method to validate user input is a number, and returns the input if it's true
-        //    public int PromptInputNumber(string input, Func<string, bool> test)
-        //    {
-        //        string userInput;
-        //        do
-        //        {
-        //            Console.WriteLine(input);
-        //            userInput = Console.ReadLine();
-        //        } while (!test(userInput));
-        //        int gameMode = int.Parse(userInput);
-        //        return gameMode;
-        //    }
-        //    //Method that validates user input is a letter or number, and returns the input if it's true
-        //    public string PromptInputLetters(string name, Func<string, bool> testLetters)
-        //    {
-        //        string playerName;
-        //        do
-        //        {
-        //            Console.Write(name);
-        //            playerName = Console.ReadLine();
-        //        } while (!testLetters(playerName));
-        //        return playerName;
-        //    }
-        //    //Method that validates user input is a letter or number
-        //    public bool TestLetters(string playerName)
-        //    {
-        //        bool testedInput = letters.IsMatch(playerName);
-        //        if (testedInput && playerName != "")
-        //        {
-        //            return (true);
-        //        }
-        //        else
-        //            return (false);
-        //    }       
-        //} 
+        public void CalculatePoints(int points)
+        {
+            if (points == 1)
+            {
+                player1Points++;
+            }
+            else if (points == 2)
+            {
+                player2Points++;
+            }
+        }
+        //Method calculates who wins
+        public int CalculateWinner(string player1Name, string player2Name, int player1Pick)
+        {
+            switch (player1Pick)
+            {
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Scissor\n{player1Name} wins this round");
+                    Console.ResetColor();
+                    return 1;
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Paper\n{player2Name} Wins this round!");
+                    Console.ResetColor();
+                    return 1;
+                case 3:
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Rock\nIt's a tie!");
+                    Console.ResetColor();
+                    return 0;
+                case 4:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Lizard\n{player1Name} wins this round");
+                    Console.ResetColor();
+                    return 1;
+                case 5:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Spock\n{player2Name} Wins this round");
+                    Console.ResetColor();
+                    return 1;
+                default:
+                    return 0;
+            }
+        }
     }
 }
 

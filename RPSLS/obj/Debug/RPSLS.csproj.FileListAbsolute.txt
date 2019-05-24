@@ -1,2 +1,7 @@
 C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\obj\Debug\RPSLS.csprojAssemblyReference.cache
 C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\obj\Debug\RPSLS.csproj.CoreCompileInputs.cache
+C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\bin\Debug\RPSLS.exe.config
+C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\bin\Debug\RPSLS.exe
+C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\bin\Debug\RPSLS.pdb
+C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\obj\Debug\RPSLS.exe
+C:\Users\palee\Desktop\RPSLS\RPSLS-Game\RPSLS\obj\Debug\RPSLS.pdb
