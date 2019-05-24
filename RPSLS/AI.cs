@@ -6,29 +6,33 @@ using System.Threading.Tasks;
 
 namespace RPSLS
 {
-    class AI: Players //inherit methods and member variables from Players class
+    public class AI : Players
     {
-    //member variable (HAS A)//
+        //member variable (HAS A)//
 
-        public string randomizeChoice;
+        //constructor (SPAWNER/DEFAULT)//
+        public AI()
+        {
 
+        }
+
+        //    //member methods (CAN DO)//
+        //    //sets player 2 name
+        //    public override void PlayerName(string word)
+        //    {
+        //        player2Name = "Ai Mike";
+        //    }
+        //    //randomizes a number between 0 and 4; this will be AI choice
+        public override string ChooseGesture()
+        {
+            Random randomizeChoice = new Random();
+            gesture = randomizeChoice.Next(0, 4);
+        }
+
+        //    //calculate points for each player
+        //    public override void CalculatePoints(int points)
+        //    {
+        //        base.CalculatePoints(points);
+        //    }
     }
-
-    //contructor (SPAWNER/DEFAULT)//
-    public AI()
-    {
-        this.randomizeChoice = new RandomChoice();
-    }
-
-
-    //member methods (CAN DO)//
-
-
-    //prompt player name
-
-    //prompt player choice
-
-    //calculate points for each player
-
-    //display points
 }
