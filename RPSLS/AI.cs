@@ -16,30 +16,26 @@ namespace RPSLS
 
         }
 
-        //    //member methods (CAN DO)//
-        //    //sets player 2 name
+        //member methods (CAN DO)//
+
+        //sets player 2 name
         public override void PromptPlayerName(int playerNumber)
         {
             player2Name = "AI Mike";
         }
-        //    //randomizes a number between 0 and 4; this will be AI choice
-
+        //randomizes a number between 0 and 4; this will be AI choice
         //CHOOSE GESTURE
-        public override string ChooseGesture()
+        public override void PlayerChoice(string PlayerName)
         {
             Random randomizeChoice = new Random();
             int randomNumber = randomizeChoice.Next(0, 4);
-            string computerGesture = gestures[randomNumber];
-            return ChooseGesture();
-
+            string player2Pick = gestures[randomNumber];
         }
 
- 
-
         //    //calculate points for each player
-        //    public override void CalculatePoints(int points)
-        //    {
-        //        base.CalculatePoints(points);
-        //    }
+        public override void CalculatePoints(int points)
+        {
+            base.CalculatePoints(points);
+        }
     }
 }

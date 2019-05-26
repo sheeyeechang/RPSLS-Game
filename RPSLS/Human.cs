@@ -16,48 +16,25 @@ namespace RPSLS
 
         }
 
-        ////member methods (CAN DO)//
+        //member methods (CAN DO)//
+        
         ////Prompts player names
         public override void PromptPlayerName(int playerNumber)
         {
             base.PromptPlayerName(playerNumber);
         }
-        ////Set player name
-        //public override void SetPlayerName(string name)
-        //{
-        //    base.SetPlayerName(name);
-        //}
 
-        //CHOOSE GESTURE
-        public override string ChooseGesture()
+        ////prompts player choice
+        ///CHOOSE GESTURE
+        public override void PlayerChoice(string PlayerName)        
         {
-            Console.WriteLine("Enter a gesture: Rock or Paper or Scissors or Lizard or Spock");
-            string gesture = Console.ReadLine();
-            switch (gesture)
-            {
-                case "Rock":
-                    return gesture;
-                case "Paper":
-                    return gesture;
-                case "Scissors":
-                    return gesture;
-                case "Lizard":
-                    return gesture;
-                case "Scope":
-                    return gesture;
-                default:
-                    return ChooseGesture();
-    }
-}
+            base.PlayerChoice(playerName);
+        }
 
-        //public override void PlayerChoice(string playerName)
-        //    {
-        //        base.PlayerChoice(playerName);
-        //    }
-
-        //public override void CalculatePoints(int points)
-        //{
-        //    base.CalculatePoints(points);
-        //}
+        //calculate points for each player
+        public override void CalculatePoints(int points)
+        {
+            base.CalculatePoints(points);
+        }
     }
 }

@@ -13,17 +13,42 @@ namespace RPSLS
         Players player1;
         Players player2;
         public int gameMode;
-        public int numbers;
-  
+
         //constructor (SPAWNER/DEFAULT)//
         public Game()
         {
-
             gameMode = 0;
 
         }
 
         //member methods (CAN DO)//
+        public void RunGame()
+        {
+            ////counter to keep track of whether to restart game or exit game
+            int restart;
+            do //loop to restart game
+            {
+                DisplayRules();
+                PromptNumberOfPlayers();
+                SetPlayers(gameMode);
+                PromptNames();
+
+                while (player1.player1Points < 3 && player2.player2Points < 3)//loop to run rounds until a player gets 2 points
+                {
+                    StartRound(gameMode);
+                    //CalculateWinner(player1.player1Name, player2.player2Name, gameMode);
+                    //player1.CalculatePoints(DetermineWinner(player1.player1Pick));
+                    DisplayPoints();
+                }
+                restart = endGame();
+                player1.player1Points = 0;
+                player2.player2Points = 0;
+                Console.Clear();
+                //loop to run game until user wants to exit
+            } while (restart == 1);
+
+            Environment.Exit(0);
+        }
 
         //display rules
         public void DisplayRules()
@@ -52,20 +77,6 @@ namespace RPSLS
             }
         }
 
-        //method to validate user input is a number
-        //public void TestNumber(string input)
-        //{
-        //    int num = 0;
-        //    try
-        //    {
-        //        num = int.Parse(input);
-        //        numbers = Math.Abs(num);
-        //    }catch(Exception e)
-        //    {
-        //        numbers = 0;
-        //    }            
-        //}
-
         //prompt game mode user wants to play; playervsplayer or playervsAI    
         public void PromptNumberOfPlayers()
         {
@@ -76,7 +87,7 @@ namespace RPSLS
                 
             } while (gameMode != 1 && gameMode != 2);
         }
-            //method to validate user input is a number, and returns the input if it's true-- valide letter that not valid so need to enter number
+        //method to validate user input is a number, and returns the input if it's true-- valide letter that not valid so need to enter number
         public int PromptInputNumber(string input)
         {
             int userInput = 0;
@@ -87,14 +98,7 @@ namespace RPSLS
             }
             while (userInput == 0);
             return userInput;
-                //try
-                //{
-                //    input = int.Parse(userInput);
-                //}
-                //catch
-                //{
-                //    return PromptInputNumber(input);
-                //}
+
         }
         //prompt player names
         public void PromptNames()
@@ -102,22 +106,16 @@ namespace RPSLS
             if (gameMode == 1)
             {
                 player1.PromptPlayerName(1);
+                player2.PromptPlayerName(2);
             }
             else if (gameMode == 2)
             {
                 player1.PromptPlayerName(1);
                 player2.PromptPlayerName(2);
-
             }
         }
-        ////CHOOSE GESTURE
-        public void MakeGesture()
-        {
-            player1.ChooseGesture();
-            player2.ChooseGesture();
-        }
-
-        //prompt for player choices
+        ////prompt for player choices
+        //CHOOSE GESTURE
         public void StartRound(int gameMode)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -126,12 +124,12 @@ namespace RPSLS
             if (gameMode == 1)
             {
                 player1.PlayerChoice(player1.player1Name);
-                //player2.PlayerChoice(player2.player2Name);
+                player2.PlayerChoice(player2.player2Name);
             }
             else if (gameMode == 2)
             {
                 player1.PlayerChoice(player1.player1Name);
-                player2.PlayerChoice(player2.player2Name);
+                player1.PlayerChoice(player1.player2Name);
             }
         }
 
@@ -142,11 +140,11 @@ namespace RPSLS
         //    {
         //        switch (player1Pick)
         //        {
-        //            case 1: return scissor.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
-        //            case 2: return paper.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
-        //            case 3: return rock.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
-        //            case 4: return lizard.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
-        //            case 5: return spock.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+        //            case 1: return scissor.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 2: return paper.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 3: return rock.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 4: return lizard.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 5: return spock.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
         //            default:
         //                Console.WriteLine("Invalid entry. Try again.\n");
         //                return 3;
@@ -155,51 +153,57 @@ namespace RPSLS
         //    else
         //        switch (player1Pick)
         //        {
-        //            case 1: return scissor.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
-        //            case 2: return paper.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
-        //            case 3: return rock.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
-        //            case 4: return lizard.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
-        //            case 5: return spock.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+        //            case 1: return scissor.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 2: return paper.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 3: return rock.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 4: return lizard.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
+        //            case 5: return spock.CalculateWinner(player1.player1Name, player2.player2Name, player2.player2Pick);
         //            default:
         //                Console.WriteLine("Invalid entry. Try again.\n");
         //                return 3;
         //        }
         //}
-
-
-        ////display points
-        //public void DisplayPoints()
-        //{
-        //    Console.ForegroundColor = ConsoleColor.Yellow;
-        //    Console.WriteLine($"\nScoreBoard:\t\t{player.player1Name}: {player.player1Points}\t{player.player2Name}: {player.player2Points}");
-        //    Console.ResetColor();
-        //}
-        ////initial method that gets called to run the game
-        public void RunGame()
+        //display points
+        public void DisplayPoints()
         {
-            //    int restart;
-            //    do //loop to restart game
-            //    {
-            DisplayRules();
-            PromptNumberOfPlayers();
-            SetPlayers(gameMode);
-            PromptNames();
-            MakeGesture();
-
-
-            while (player1.player1Points < 3 && player2.player2Points < 3)//loop to run rounds until a player gets 2 points
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\nScoreBoard:\t\t{player1.player1Name}: {player1.player1Points}\t{player2.player2Name}: {player2.player2Points}");
+            Console.ResetColor();
+        }
+        //prompt the user to end game or play again
+        public int endGame()
+        {
+            string winner;
+            int endOfGame;
+            int i = 0;
+            if (player1.player1Points == 2)
             {
-                StartRound(gameMode);
-                //            player.CalculatePoints(DetermineWinner(player.player1Pick));
-                //            DisplayPoints();
-                //        }
-                //        restart = endGame();
-                //        player.player1Points = 0;
-                //        player.player2Points = 0;
-                //        Console.Clear();
-                //    } while (restart == 1);
-                //    Environment.Exit(0);
+                winner = player1.player1Name;
             }
+            else if (player2.player2Points == 2 && gameMode == 2)
+            {
+                winner = player2.player2Name;
+            }
+            else
+            {
+                winner = player2.player2Name;
+            }
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"\n\n{winner} is the winner!");
+            Console.ResetColor();
+            do
+            {
+                if (i > 0)
+                {
+
+                    Console.WriteLine("Invalid entry.Try again.\n");
+                }
+                endOfGame = PromptInputNumber("Would you like to play again? 1= yes\t2= no"); //TestNumber);
+                i++;
+
+            } while (endOfGame == 0 || endOfGame > 2);
+
+            return endOfGame;
         }
     }
 }
