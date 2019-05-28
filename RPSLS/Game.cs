@@ -24,7 +24,8 @@ namespace RPSLS
             DisplayRules();
             PromptNumberOfPlayers();
             SetPlayers(gameMode);
-            SetPlayerNames();
+            SetPlayerOneNames();
+            SetPlayerTwoNames();
 
             while (DetermineWinner())
             {
@@ -65,23 +66,28 @@ namespace RPSLS
             {
                 player1 = new Human();
                 player2 = new AI();
+                Console.WriteLine("This is a single player game!");
+                Console.ReadLine();
             }
             else if (numberOfPlayers == 2)
             {
                 player1 = new Human();
                 player2 = new Human();
+                Console.WriteLine("This is a multiplayer game!");
+                Console.ReadLine();
             }
         }
 
         //prompt game mode user wants to play; Human vs AI or Human vs Human 
         public void PromptNumberOfPlayers()
         {
-            //int gameMode, i = 0;
-            do
+        gameMode = PromptInputNumber("Enter the game mode you would like to play: 1 = Human vs AI\t\t 2 = Human vs Human");                      
+            if (gameMode != 1 && gameMode != 2)
             {
-                gameMode = PromptInputNumber("Enter the game mode you would like to play: 1 = Human vs AI\t\t 2 = Human vs Human");
-                
-            } while (gameMode != 1 && gameMode != 2);
+                Console.WriteLine("Invalid entry. Please enter 1 or 2:");
+                PromptNumberOfPlayers();
+            }
+
         }
         //method to validate user input is a number, and returns the input if it's true-- valide letter that not valid so need to enter number
         public int PromptInputNumber(string input)
@@ -96,28 +102,40 @@ namespace RPSLS
             return userInput;
         }
 
-        ////Method that validates user input is a letter or number, and returns the input if it's true
-        public string PromptInputLetters(string name)
-        {
-            string playerName = "";
-            do
-            {
-                Console.WriteLine(name);
-                playerName = Console.ReadLine();
-            }
-            while (playerName.Length < 1);
-            return playerName;
-        }
-
         //Set Player Names
-        public void SetPlayerNames()
+        public void SetPlayerOneNames()
         {
             Console.WriteLine("Enter Player 1 name:");
             player1.name = Console.ReadLine();
+            CheckPlayerOneName();
+        }
+        // Check Player One Name
+        public void CheckPlayerOneName()
+        {
+            if (player1.name == string.Empty)
+            {
+                Console.WriteLine("Player 1 needs a name");
+                Console.ReadLine();
+                SetPlayerOneNames();
+            }
+        }
+        public void SetPlayerTwoNames()
+        { 
             Console.WriteLine("Enter Player 2 name:");
             player2.name = Console.ReadLine();
+            CheckPlayerTwoName();
         }
 
+        // Check Player Two Name
+        public void CheckPlayerTwoName()
+        {
+            if (player2.name == string.Empty)
+            {
+                Console.WriteLine("Player 2 needs a name");
+                Console.ReadLine();
+                SetPlayerTwoNames();
+            }
+        }
         ////prompt for player choices
         //CHOOSE GESTURE
         public void MakeGesture()
@@ -145,7 +163,7 @@ namespace RPSLS
                 case ("lizard vs paper"):
                 case ("paper vs spock"):
                 case ("spock vs rock"):
-                    Console.WriteLine(player1.name + " has won the round. Press Enter to continue.");
+                    Console.WriteLine(player1.name + " has won the round. To Continue: Press Enter");
                     Console.ReadLine();
                     player1.score++;
                     break;
@@ -160,7 +178,7 @@ namespace RPSLS
                 case ("paper vs lizard"):
                 case ("spock vs paper"):
                 case ("rock vs spock"):
-                    Console.WriteLine(player2.name + " wins the round. Press enter to continue.");
+                    Console.WriteLine(player2.name + " wins the round. To Continue: Press Enter");
                     Console.ReadLine();
                     player2.score++;
                     break;
@@ -172,13 +190,13 @@ namespace RPSLS
         {
             if(player1.score > 1)
             {
-                Console.WriteLine(player1.name + " is the winner! Press Enter to continue.");
+                Console.WriteLine(player1.name + " is the winner! To Continue: Press Enter");
                 Console.ReadLine();
                 return false;
             }
             else if(player2.score > 1)
             {
-                Console.WriteLine(player2.name + " is the winner! Press enter to continue.");
+                Console.WriteLine(player2.name + " is the winner! To Continue: Press Enter");
                 Console.ReadLine();
                 return false;
             }
@@ -192,7 +210,7 @@ namespace RPSLS
         {
             if (player1.gesture == player2.gesture)
             {
-                Console.WriteLine("It's a tie! Press Enter to continue.");
+                Console.WriteLine("It's a tie! To Continue: Press Enter");
                 Console.ReadLine();
                 return true;
             }

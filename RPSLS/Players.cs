@@ -12,8 +12,6 @@ namespace RPSLS
         public string gesture;
         public List<string> gestures;
 
-        public string player1Name;
-        public string player2Name;
         public int gameMode;
 
         //constructor (SPAWNER/DEFAULT)//

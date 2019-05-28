@@ -8,6 +8,7 @@ namespace RPSLS
     {
         //member variable (HAS A)//
 
+
         //constructor (SPAWNER/DEFAULT)//
         public Human()
         {
@@ -33,13 +34,13 @@ namespace RPSLS
             gesture = Console.ReadLine().ToLower();
             if (gesture == "rock" || gesture == "paper" || gesture == "scissors" || gesture == "lizard" || gesture == "spock")
             {
-                Console.WriteLine("Player chose " + gesture + ". Press enter to continue.");
+                Console.WriteLine("Player 1 chose " + gesture + ". To Continue: Press Enter");
                 Console.ReadLine();
                 return gesture;
             }
             else
             {
-                Console.WriteLine("Invalid input! Choose from:");
+                Console.WriteLine("Invalid entry! Please choose a gesture:");
                 return ChooseGesture();
             }
         }

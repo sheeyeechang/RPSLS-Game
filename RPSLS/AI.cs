@@ -44,7 +44,7 @@ namespace RPSLS
                     break;
 
             }
-            Console.WriteLine("Player chose " + gesture + ". Press enter to continue.");
+            Console.WriteLine("Player 2 chose " + gesture + ". Press enter to continue.");
             Console.ReadLine();
             return gesture;
         }
