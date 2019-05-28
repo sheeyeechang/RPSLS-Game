@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RPSLS
 {
@@ -17,24 +15,33 @@ namespace RPSLS
         }
 
         //member methods (CAN DO)//
-        
+
         ////Prompts player names
-        public override void PromptPlayerName(int playerNumber)
-        {
-            base.PromptPlayerName(playerNumber);
-        }
+        //public override void PromptPlayerName(int playerNumber)
+        //{
+        //    base.PromptPlayerName(playerNumber);
+        //}
 
         ////prompts player choice
         ///CHOOSE GESTURE
-        public override void PlayerChoice(string PlayerName)        
+        public override string ChooseGesture()
         {
-            base.PlayerChoice(playerName);
-        }
-
-        //calculate points for each player
-        public override void CalculatePoints(int points)
-        {
-            base.CalculatePoints(points);
+            foreach (string gesture in gestures)
+            {
+                Console.WriteLine(gesture);
+            }
+            gesture = Console.ReadLine().ToLower();
+            if (gesture == "rock" || gesture == "paper" || gesture == "scissors" || gesture == "lizard" || gesture == "spock")
+            {
+                Console.WriteLine("Player chose " + gesture + ". Press enter to continue.");
+                Console.ReadLine();
+                return gesture;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input! Choose from:");
+                return ChooseGesture();
+            }
         }
     }
 }

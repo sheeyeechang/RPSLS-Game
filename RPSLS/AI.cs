@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RPSLS
 {
@@ -10,32 +8,45 @@ namespace RPSLS
     {
         //member variable (HAS A)//
 
+        Random randomizeChoice;
+
         //constructor (SPAWNER/DEFAULT)//
         public AI()
         {
-
+            randomizeChoice = new Random();
         }
 
         //member methods (CAN DO)//
 
-        //sets player 2 name
-        public override void PromptPlayerName(int playerNumber)
+        public override string ChooseGesture()
         {
-            player2Name = "AI Mike";
-        }
-        //randomizes a number between 0 and 4; this will be AI choice
-        //CHOOSE GESTURE
-        public override void PlayerChoice(string PlayerName)
-        {
-            Random randomizeChoice = new Random();
-            int randomNumber = randomizeChoice.Next(0, 4);
-            string player2Pick = gestures[randomNumber];
-        }
+            foreach (string gesture in gestures)
+            {
+                Console.WriteLine(gesture);
+            }
+            int gestureRoll = randomizeChoice.Next(5);
+            switch (gestureRoll)
+            {
+                case 0:
+                    gesture = "rock";
+                    break;
+                case 1:
+                    gesture = "paper";
+                    break;
+                case 2:
+                    gesture = "scissors";
+                    break;
+                case 3:
+                    gesture = "lizard";
+                    break;
+                case 4:
+                    gesture = "spock";
+                    break;
 
-        //    //calculate points for each player
-        public override void CalculatePoints(int points)
-        {
-            base.CalculatePoints(points);
+            }
+            Console.WriteLine("Player chose " + gesture + ". Press enter to continue.");
+            Console.ReadLine();
+            return gesture;
         }
     }
 }
